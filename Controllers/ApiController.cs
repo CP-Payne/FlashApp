@@ -12,7 +12,9 @@ namespace FlashApp.Controllers
 {
     [ApiController]
     [Authorize]
-    public class ApiController : ControllerBase
+    // [Authorize]
+    [Route("/")]
+    public abstract class ApiController : ControllerBase
     {
         protected IActionResult Problem(List<Error> errors)
         {

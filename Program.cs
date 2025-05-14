@@ -2,10 +2,13 @@ using System.Text;
 using FlashApp.Common.Errors;
 using FlashApp.Common.Settings;
 using FlashApp.Data;
+using FlashApp.Interfaces.Repository;
 using FlashApp.Interfaces.Services;
 using FlashApp.Models;
+using FlashApp.Repository;
 using FlashApp.Services;
 using FlashApp.Services.Authentication;
+using FlashApp.Services.Flashcard;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -16,6 +19,7 @@ using Microsoft.IdentityModel.Tokens;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+
 builder.Services.AddSingleton<ProblemDetailsFactory, FlashAppProblemDetailsFactory>();
 
 // Add services to the container.
@@ -34,10 +38,6 @@ builder
         options.Password.RequireNonAlphanumeric = true;
         options.Password.RequiredLength = 12;
 
-        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-        options.Lockout.MaxFailedAccessAttempts = 5;
-        options.Lockout.AllowedForNewUsers = true;
-
         options.User.RequireUniqueEmail = true;
     })
     .AddEntityFrameworkStores<ApplicationDBContext>();
@@ -48,7 +48,16 @@ builder.Services.AddSingleton(Options.Create(jwtSettings));
 builder.Services.AddSingleton<ITokenService, TokenService>();
 
 builder
-    .Services.AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
+    .Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme =
+            options.DefaultChallengeScheme =
+            options.DefaultForbidScheme =
+            options.DefaultScheme =
+            options.DefaultSignInScheme =
+            options.DefaultSignOutScheme =
+                JwtBearerDefaults.AuthenticationScheme;
+    })
     .AddJwtBearer(options =>
         options.TokenValidationParameters = new TokenValidationParameters
         {
@@ -62,8 +71,13 @@ builder
         }
     );
 
+// Repository Dependency Injection
+builder.Services.AddScoped<IFlashcardRepository, FlashcardRepository>();
+
+// Services Dependency Injection
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IFlashcardService, FlashcardService>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -75,7 +89,7 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
-
+app.UseExceptionHandler("/error");
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

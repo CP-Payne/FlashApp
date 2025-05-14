@@ -1,0 +1,11 @@
+@host = http://localhost:5248
+
+
+POST {{host}}/flashcard
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMTQ5ZDExZS05MTViLTQzNzAtODdkYi0xZjBhOTlmNzdiNWEiLCJqdGkiOiI2ODUwNWI2MS00ZDU2LTRiZjgtOTYzYS1mNGExNjkxYTE4OTUiLCJ1bmlxdWVfbmFtZSI6IkpvaG4iLCJlbWFpbCI6ImpvaG5kb2VAZXhhbXBsZS5jb20iLCJleHAiOjE3NDcyNDY2NjYsImlzcyI6IkZsYXNoQXBwIiwiYXVkIjoiRmxhc2hBcHAifQ.u7XA3EXca__fVYQu6bMT6uc9Z9XKg_yD7cr4LHlrk7w
+
+{
+    "question": "How are you?",
+    "answer": "Good thank you! :D"
+}
