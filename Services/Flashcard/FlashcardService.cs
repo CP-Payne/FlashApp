@@ -2,6 +2,7 @@ using ErrorOr;
 using FlashApp.Interfaces.Repository;
 using FlashApp.Interfaces.Services;
 using FlashApp.Models;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace FlashApp.Services.Flashcard
@@ -9,11 +10,15 @@ namespace FlashApp.Services.Flashcard
     public class FlashcardService : IFlashcardService
     {
         private readonly IFlashcardRepository _flashcardRepo;
+        private readonly IValidator<CreateFlashcardCommand> _createCommandValidator;
 
-        public FlashcardService(IFlashcardRepository flashcardRepo)
+        public FlashcardService(
+            IFlashcardRepository flashcardRepo,
+            IValidator<CreateFlashcardCommand> createCommandValidator
+        )
         {
             _flashcardRepo = flashcardRepo;
-            // _createCommandValidator = createCommandValidator // TODO: Add FluentValidation
+            _createCommandValidator = createCommandValidator;
         }
 
         public async Task<ErrorOr<Models.Flashcard>> CreateFlashcardAsync(
