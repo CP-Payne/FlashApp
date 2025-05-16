@@ -18,37 +18,47 @@ namespace FlashApp.Repository
             _context = context;
         }
 
-        public async Task<Flashcard> AddAsync(Flashcard flashcard)
+        public async Task AddAsync(Flashcard flashcard)
         {
             await _context.Flashcards.AddAsync(flashcard);
-            await _context.SaveChangesAsync();
-            return flashcard;
         }
 
-        public async Task<List<Flashcard>> GetAllByUserIdAsync(Guid userId)
+        public async Task<List<Flashcard>> GetAllByUserIdAsync(string userId)
         {
-            string userIdString = userId.ToString();
             return await _context
-                .Flashcards.Include(f => f.AppUser)
-                .Where(f => f.AppUserId.Equals(userIdString))
+                .Flashcards.Where(f => f.AppUserId == userId)
+                .OrderByDescending(f => f.CreatedAt)
                 .ToListAsync();
         }
 
-        public Task<Flashcard?> GetByIdAsync(Guid userId, Guid flashcardId)
+        public async Task<Flashcard?> GetByIdAndUserIdAsync(Guid flashcardId, string userId)
         {
-            return _context.Flashcards.FirstOrDefaultAsync(f =>
-                Guid.Parse(f.AppUserId) == userId && f.Id == flashcardId
+            return await _context.Flashcards.FirstOrDefaultAsync(f =>
+                f.AppUserId == userId && f.Id == flashcardId
             );
         }
 
-        public Task<bool> SaveChangesAsync()
+        public async Task<Flashcard?> GetByQuestionAndUserIdAsync(string question, string userId)
         {
-            throw new NotImplementedException();
+            return await _context.Flashcards.FirstOrDefaultAsync(f =>
+                f.Question == question && f.AppUserId == userId
+            );
         }
 
-        public Task Update(Flashcard flashcard)
+        public async Task<bool> SaveChangesAsync()
         {
-            throw new NotImplementedException();
+            // Return true if any entities were saved
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public void Update(Flashcard flashcard)
+        {
+            _context.Flashcards.Update(flashcard);
+        }
+
+        public void Delete(Flashcard flashcard)
+        {
+            _context.Flashcards.Remove(flashcard);
         }
     }
 }

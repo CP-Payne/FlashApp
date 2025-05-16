@@ -1,0 +1,12 @@
+@host = http://localhost:5248
+@flashcardId = 52c90083-7a44-4a7d-bee4-dc84f573acdf
+
+
+POST {{host}}/api/flashcards/{{flashcardId}}/review-schedule
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMTQ5ZDExZS05MTViLTQzNzAtODdkYi0xZjBhOTlmNzdiNWEiLCJqdGkiOiI5MTNhMmFjOS0yMTZjLTQ4OWEtOWM0YS0yODUxYmVhMDc5NGQiLCJ1bmlxdWVfbmFtZSI6IkpvaG4iLCJlbWFpbCI6ImpvaG5kb2VAZXhhbXBsZS5jb20iLCJleHAiOjE3NDc0MTE0MzUsImlzcyI6IkZsYXNoQXBwIiwiYXVkIjoiRmxhc2hBcHAifQ.mq4sEHusUp6sJpGf5udNQ8fYAsYOKqgJnKYlc1HhdQ4
+
+{
+  "newLastReviewed": "2025-05-16T00:00:00",
+  "newNextReview": "2025-05-16T09:00:40.7171524"
+}

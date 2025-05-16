@@ -1,11 +1,11 @@
 @host = http://localhost:5248
 
 
-POST {{host}}/flashcard
+POST {{host}}/api/flashcards/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMTQ5ZDExZS05MTViLTQzNzAtODdkYi0xZjBhOTlmNzdiNWEiLCJqdGkiOiI2ODUwNWI2MS00ZDU2LTRiZjgtOTYzYS1mNGExNjkxYTE4OTUiLCJ1bmlxdWVfbmFtZSI6IkpvaG4iLCJlbWFpbCI6ImpvaG5kb2VAZXhhbXBsZS5jb20iLCJleHAiOjE3NDcyNDY2NjYsImlzcyI6IkZsYXNoQXBwIiwiYXVkIjoiRmxhc2hBcHAifQ.u7XA3EXca__fVYQu6bMT6uc9Z9XKg_yD7cr4LHlrk7w
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMTQ5ZDExZS05MTViLTQzNzAtODdkYi0xZjBhOTlmNzdiNWEiLCJqdGkiOiI0NGQ1ZDAyZS0yMWJjLTRlM2YtYWU4Ny1kOTZmMWY1YTVkMjIiLCJ1bmlxdWVfbmFtZSI6IkpvaG4iLCJlbWFpbCI6ImpvaG5kb2VAZXhhbXBsZS5jb20iLCJleHAiOjE3NDczODgxNTEsImlzcyI6IkZsYXNoQXBwIiwiYXVkIjoiRmxhc2hBcHAifQ.ARRUBXe1Zz67l-n32N7Iui8b2ioJ5L1Uth5B83n8HBE
 
 {
-    "question": "How are you?",
-    "answer": "Good thank you! :D"
+    "question": "b??",
+    "answer": "Very much so! :D"
 }

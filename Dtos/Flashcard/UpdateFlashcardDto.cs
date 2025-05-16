@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FlashApp.Dtos.Flashcard
 {
-    public class CreateFlashcardDto
+    public class UpdateFlashcardDto
     {
         [Required(ErrorMessage = "Question is required.")]
         [StringLength(

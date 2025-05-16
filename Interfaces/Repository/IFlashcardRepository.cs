@@ -8,10 +8,23 @@ namespace FlashApp.Interfaces.Repository
 {
     public interface IFlashcardRepository
     {
-        Task<List<Flashcard>> GetAllByUserIdAsync(Guid userId);
-        Task<Flashcard?> GetByIdAsync(Guid userId, Guid flashcardId);
-        Task<Flashcard> AddAsync(Flashcard flashcard);
-        Task Update(Flashcard flashcard);
+        // Completed
+        Task<List<Flashcard>> GetAllByUserIdAsync(string userId);
+
+        // Completed
+        Task<Flashcard?> GetByIdAndUserIdAsync(Guid flashcardId, string userId);
+
+        // Completed
+        Task<Flashcard?> GetByQuestionAndUserIdAsync(string question, string userId);
+
+        // Completed
+        Task AddAsync(Flashcard flashcard);
+
+        // Completed
+        void Update(Flashcard flashcard);
+        void Delete(Flashcard flashcard);
+
+        // SaveChangesAsync();
         Task<bool> SaveChangesAsync();
     }
 }

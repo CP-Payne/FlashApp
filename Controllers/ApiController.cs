@@ -12,7 +12,6 @@ namespace FlashApp.Controllers
 {
     [ApiController]
     [Authorize]
-    // [Authorize]
     [Route("/")]
     public abstract class ApiController : ControllerBase
     {

@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FlashApp.Controllers
 {
-    [Route("auth")]
+    [Route("api/auth")]
     [AllowAnonymous]
     public class AuthenticationController : ApiController
     {
