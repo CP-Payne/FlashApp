@@ -1,4 +1,5 @@
 using ErrorOr;
+using FlashApp.Common.Helpers.Validation;
 using FlashApp.Interfaces.Repository;
 using FlashApp.Interfaces.Services;
 using FlashApp.Models;
@@ -11,21 +12,32 @@ namespace FlashApp.Services.Flashcard
     {
         private readonly IFlashcardRepository _flashcardRepo;
         private readonly IValidator<CreateFlashcardCommand> _createCommandValidator;
+        private readonly IValidator<UpdateFlashcardCommand> _updateFlashcardCommandValidator;
+        private readonly IValidator<UpdateReviewScheduleCommand> _updateReviewScheduleCommandValidator;
 
         public FlashcardService(
             IFlashcardRepository flashcardRepo,
-            IValidator<CreateFlashcardCommand> createCommandValidator
+            IValidator<CreateFlashcardCommand> createCommandValidator,
+            IValidator<UpdateFlashcardCommand> updateFlashcardCommandValidator,
+            IValidator<UpdateReviewScheduleCommand> updateReviewScheduleCommandValidator
         )
         {
             _flashcardRepo = flashcardRepo;
             _createCommandValidator = createCommandValidator;
+            _updateFlashcardCommandValidator = updateFlashcardCommandValidator;
+            _updateReviewScheduleCommandValidator = updateReviewScheduleCommandValidator;
         }
 
         public async Task<ErrorOr<Models.Flashcard>> CreateFlashcardAsync(
             CreateFlashcardCommand command
         )
         {
-            // TODO: validate the command for business rules at a later time
+            var validationResult = await _createCommandValidator.ValidateAsync(command);
+            if (!validationResult.IsValid)
+            {
+                return validationResult.ToError();
+            }
+
             var existingFlashcard = await _flashcardRepo.GetByQuestionAndUserIdAsync(
                 command.Question,
                 command.AppUserId
@@ -119,7 +131,6 @@ namespace FlashApp.Services.Flashcard
         {
             if (!Guid.TryParse(userId, out _))
             {
-                // If this point is reached then something is wrong with JWT Token
                 return Error.Validation("UserId.InvalidId", "User ID format is invalid.");
             }
 
@@ -131,6 +142,11 @@ namespace FlashApp.Services.Flashcard
             UpdateFlashcardCommand command
         )
         {
+            var validationResult = await _updateFlashcardCommandValidator.ValidateAsync(command);
+            if (!validationResult.IsValid)
+            {
+                return validationResult.ToError();
+            }
             var existingFlashcard = await _flashcardRepo.GetByIdAndUserIdAsync(
                 command.FlashcardId,
                 command.AppUserId
@@ -180,6 +196,13 @@ namespace FlashApp.Services.Flashcard
             UpdateReviewScheduleCommand command
         )
         {
+            var validationResult = await _updateReviewScheduleCommandValidator.ValidateAsync(
+                command
+            );
+            if (!validationResult.IsValid)
+            {
+                return validationResult.ToError();
+            }
             var existingFlashcard = await _flashcardRepo.GetByIdAndUserIdAsync(
                 command.FlashcardId,
                 command.AppUserId
