@@ -143,3 +143,5 @@ docker-compose.override.yml
 
 # Ignore local CSharpier Configuration
 .config
+
+.vscode

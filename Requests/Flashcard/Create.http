@@ -1,11 +1,9 @@
-@host = http://localhost:5248
-
 
 POST {{host}}/api/flashcards/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMTQ5ZDExZS05MTViLTQzNzAtODdkYi0xZjBhOTlmNzdiNWEiLCJqdGkiOiI0NGQ1ZDAyZS0yMWJjLTRlM2YtYWU4Ny1kOTZmMWY1YTVkMjIiLCJ1bmlxdWVfbmFtZSI6IkpvaG4iLCJlbWFpbCI6ImpvaG5kb2VAZXhhbXBsZS5jb20iLCJleHAiOjE3NDczODgxNTEsImlzcyI6IkZsYXNoQXBwIiwiYXVkIjoiRmxhc2hBcHAifQ.ARRUBXe1Zz67l-n32N7Iui8b2ioJ5L1Uth5B83n8HBE
+Authorization: Bearer {{jwt_token}}
 
 {
-    "question": "b??",
+    "question": "This question does not exist",
     "answer": "Very much so! :D"
 }
