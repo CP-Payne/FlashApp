@@ -35,7 +35,7 @@ namespace FlashApp.Services.Flashcard
             var validationResult = await _createCommandValidator.ValidateAsync(command);
             if (!validationResult.IsValid)
             {
-                return validationResult.ToError();
+                return validationResult.ConvertToErrorList();
             }
 
             var existingFlashcard = await _flashcardRepo.GetByQuestionAndUserIdAsync(
@@ -145,7 +145,7 @@ namespace FlashApp.Services.Flashcard
             var validationResult = await _updateFlashcardCommandValidator.ValidateAsync(command);
             if (!validationResult.IsValid)
             {
-                return validationResult.ToError();
+                return validationResult.ConvertToErrorList();
             }
             var existingFlashcard = await _flashcardRepo.GetByIdAndUserIdAsync(
                 command.FlashcardId,
@@ -201,7 +201,7 @@ namespace FlashApp.Services.Flashcard
             );
             if (!validationResult.IsValid)
             {
-                return validationResult.ToError();
+                return validationResult.ConvertToErrorList();
             }
             var existingFlashcard = await _flashcardRepo.GetByIdAndUserIdAsync(
                 command.FlashcardId,

@@ -13,7 +13,7 @@ namespace FlashApp.Common.Helpers.Validation
             return Guid.TryParse(guidString, out _);
         }
 
-        public static List<Error> ToError(
+        public static List<Error> ConvertToErrorList(
             this FluentValidation.Results.ValidationResult validationResult
         )
         {
