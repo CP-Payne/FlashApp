@@ -184,7 +184,7 @@ namespace FlashApp.Services.Flashcard
             if (!success)
             {
                 return Error.Failure(
-                    code: "Flashcard.UpdateFailed",
+                    code: "Flashcard.UpdateFailed.Persistence",
                     description: "Failed to update the flashcard."
                 );
             }
@@ -227,7 +227,7 @@ namespace FlashApp.Services.Flashcard
             if (!success)
             {
                 return Error.Failure(
-                    code: "Flashcard.UpdateFailed",
+                    code: "Flashcard.UpdateFailed.Persistence",
                     description: "Failed to update flashcard review schedule."
                 );
             }
