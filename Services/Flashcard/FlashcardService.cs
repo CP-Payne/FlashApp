@@ -38,17 +38,6 @@ namespace FlashApp.Services.Flashcard
                 return validationResult.ConvertToErrorList();
             }
 
-            var existingFlashcard = await _flashcardRepo.GetByQuestionAndUserIdAsync(
-                command.Question,
-                command.AppUserId
-            );
-            if (existingFlashcard != null)
-            {
-                return Error.Conflict(
-                    code: "Flashcard.DuplicateQuestion",
-                    description: "A flashcard with this question already exists for your account."
-                );
-            }
             var flashcard = new Models.Flashcard
             {
                 Id = Guid.NewGuid(),
@@ -157,21 +146,6 @@ namespace FlashApp.Services.Flashcard
                     code: "Flashcard.NotFound",
                     description: "Flashcard not found or you do not have permission to modify it."
                 );
-            }
-
-            if (existingFlashcard.Question != command.Question)
-            {
-                var conflictingFlashcard = await _flashcardRepo.GetByQuestionAndUserIdAsync(
-                    command.Question,
-                    command.AppUserId
-                );
-                if (conflictingFlashcard != null && conflictingFlashcard.Id != existingFlashcard.Id)
-                {
-                    return Error.Conflict(
-                        code: "Flashcard.DuplicateQuestion",
-                        description: "A flashcard with this question already exists for your account."
-                    );
-                }
             }
 
             existingFlashcard.Question = command.Question;
